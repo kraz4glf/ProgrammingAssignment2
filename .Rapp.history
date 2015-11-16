@@ -1,0 +1,217 @@
+## These are two functions that are used to create a special object#
+## that stores a matrix and cache's its inverse.#
+#
+## The makeCacheMatrix function creates a special "matrix" object#
+## that can cache its inverse.#
+## It returns a list containing functions to#
+##              1. set the matrix#
+##              2. get the matrix#
+##              3. set the inverse#
+##              4. get the inverse#
+#
+makeCacheMatrix <- function(x = matrix()) {#
+        ## @x: a square invertible matrix#
+        # Initially initialize inv to Null#
+        inv = NULL#
+#
+        #  Set the matrix#
+        set = function(y) {#
+                # use `<<-` to assign a value to an object in an environment #
+                # different from the current environment. #
+                x <<- y#
+                inv <<- NULL#
+        }#
+        # Get the matrix#
+        get = function() x#
+#
+        # Set the inverse#
+        setinv = function(inverse) inv <<- inverse #
+        ## Get the inverse#
+        getinv = function() inv#
+#
+        # This list of functions is returned#
+        #              1. set the matrix#
+        #              2. get the matrix#
+        #              3. set the inverse#
+        #              4. get the inverse#
+        # This list is used as the input to cacheSolve()#
+        list(set=set, get=get, setinv=setinv, getinv=getinv)#
+}#
+## This function computes the inverse of the special "matrix" returned by #
+## makeCacheMatrix above. If the inverse has already been calculated #
+## (and the matrix has not changed), then the cachesolve should retrieve #
+## the inverse from the cache.#
+#
+cacheSolve <- function(x, ...) {#
+        ## @x: output of makeCacheMatrix()#
+        # Get the value of the inverse in the cache via the getinv function.#
+        # This is Null if the inverse has not been previously calculated#
+        inv = x$getinv()#
+        # If the inverse has already been calculated, return the cached copy#
+        # of the inverse#
+        if (!is.null(inv)){#
+                # get it from the cache and skips the computation. #
+                message("getting cached data")#
+                return(inv)#
+        }#
+        # Otherwise, calculate the inverse #
+        # if mat.data is a square invertible matrix, then solve(mat.data) returns its inverse#
+        mat.data = x$get()#
+        inv = solve(mat.data, ...)#
+        # Set the value of the inverse in the cache via the setinv function.#
+        x$setinv(inv)#
+        # Return a matrix that is the inverse of the original matrix input to makeCacheMatrix()#
+        return(inv)#
+}
+test = function(mat){#
+        ## @mat: an invertible matrix#
+        temp = makeCacheMatrix(mat)#
+        start.time = Sys.time()#
+        cacheSolve(temp)#
+        dur = Sys.time() - start.time#
+        print(dur)#
+        start.time = Sys.time()#
+        cacheSolve(temp)#
+        dur = Sys.time() - start.time#
+        print(dur)#
+}
+set.seed(1110201)#
+r = rnorm(1000000)#
+mat1 = matrix(r, nrow=1000, ncol=1000)#
+test(mat1)
+library(datasets)#
+data(iris)
+?iris
+mean(Sepal.Length)
+iris
+mean(iris[Sepal.Length])
+mean(iris(Sepal.Length))
+summary iris
+iris
+mean(iris.Sepal.Length)
+type iris
+type(iris)
+mean(iris$Sepal.Length[Sepal.Length])
+mean(iris$Sepal.Length[1])
+mean(iris$Sepal.Length[0])
+mean(iris$Sepal.Length[2])
+mean(iris$Sepal.Length[3])
+mean(iris$Sepal.Length[4])
+mean(iris$Sepal.Length[5])
+col <- c("Sepal.Length", "Sepal.Width",  "Petal.Length", "Petal.Width", "Species")
+mean(iris$Sepal.Length[3])
+apply(iris[, 1:4], 2, mean)
+apply(iris, 1, mean)
+rowMeans(iris[, 1:4])
+apply(iris, 2, mean)
+library(datasets)#
+data(mtcars)
+?mtcars
+mtcars
+mean(mtcars$mpg, mtcars$cyl)
+with(mtcars, tapply(mpg, cyl, mean))
+apply(mtcars, 2, mean)
+sapply(mtcars, cyl, mean)
+with(mtcars, tapply(hp, cyl, mean))
+209.21429 - 82.63636
+debug(ls)
+ls
+ls .
+ls
+c
+ls
+n
+library(datasets)#
+data(iris)
+apply(iris[, 1:4], 2, mean)
+iris
+library(datasets)
+data(iris)
+?iris
+View(iris)
+virginica <- subset(iris, Species == "virginica")
+virginica
+summary(virginica)
+apply(iris[, 1:4], 2, mean)
+sapply(split(mtcars$mpg, mtcars$cyl), mean)
+lapply(mtcars, mean)
+split(mtcars, mtcars$cyl)
+apply(mtcars, 2, mean)
+## These are two functions that are used to create a special object#
+## that stores a matrix and cache's its inverse.#
+#
+## The makeCacheMatrix function creates a special "matrix" object#
+## that can cache its inverse.#
+## It returns a list containing functions to#
+##              1. set the matrix#
+##              2. get the matrix#
+##              3. set the inverse#
+##              4. get the inverse#
+#
+makeCacheMatrix <- function(x = matrix()) {#
+        ## @x: a square invertible matrix#
+        # Initially initialize inverse_matrix to Null#
+        inverse_matrix = NULL#
+#
+        #  Set the matrix#
+        set = function(y) { #
+                x <<- y#
+                inverse_matrix <<- NULL#
+        }#
+        # Get the matrix#
+        get = function() x#
+#
+        # Set the inverse#
+        setinv = function(inverse) inverse_matrix <<- inverse #
+        ## Get the inverse#
+        getinv = function() inverse_matrix#
+#
+        # This list of functions is returned and used as the input to cacheSolve()#
+        #              1. set the matrix#
+        #              2. get the matrix#
+        #              3. set the inverse#
+        #              4. get the inverse#
+        list(set=set, get=get, setinv=setinv, getinv=getinv)#
+}#
+## This function computes the inverse of the special "matrix" returned by #
+## makeCacheMatrix above. If the inverse has already been calculated #
+## (and the matrix has not changed), then the cachesolve should retrieve #
+## the inverse from the cache.#
+#
+cacheSolve <- function(x, ...) {#
+        ## @x: output of makeCacheMatrix()#
+        # Get the value of the inverse in the cache via the getinv function.#
+        # This is Null if the inverse has not been previously calculated#
+        inverse_matrix = x$getinv()#
+        # If the inverse has already been calculated, return the cached copy#
+        # of the inverse#
+        if (!is.null(inverse_matrix)){#
+                # get it from the cache and skips the computation. #
+                message("getting cached data")#
+                return(inverse_matrix)#
+        }#
+        # Otherwise, calculate the inverse #
+        # if mat.data is a square invertible matrix, then solve(mat.data) returns its inverse#
+        mat.data = x$get()#
+        inverse_matrix = solve(mat.data, ...)#
+        # Set the value of the inverse in the cache via the setinv function.#
+        x$setinv(inverse_matrix)#
+        # Return a matrix that is the inverse of the original matrix input to makeCacheMatrix()#
+        return(inverse_matrix)#
+}
+test = function(mat){#
+        ## @mat: an invertible matrix#
+        temp = makeCacheMatrix(mat)#
+        start.time = Sys.time()#
+        cacheSolve(temp)#
+        dur = Sys.time() - start.time#
+        print(dur)#
+        start.time = Sys.time()#
+        cacheSolve(temp)#
+        dur = Sys.time() - start.time#
+        print(dur)
+}
+set.seed(1110201)#
+r = rnorm(1000000)#
+mat1 = matrix(r, nrow=1000, ncol=1000)#
+test(mat1)
